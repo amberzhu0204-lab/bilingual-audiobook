@@ -1,0 +1,339 @@
+{
+  "generatedAt": "2026-10-09T04:33:04.133Z",
+  "host": "darwin arm64",
+  "recommended": {
+    "en": [
+      "Samantha",
+      "Ava",
+      "Allison",
+      "Susan",
+      "Kathy",
+      "Zoe",
+      "Nicky",
+      "Flo (英语（美国）)",
+      "Sandy (英语（美国）)"
+    ],
+    "zh": [
+      "Tingting",
+      "Meijia",
+      "Sinji",
+      "Flo (中文（中国大陆）)",
+      "Sandy (中文（中国大陆）)",
+      "Shelley (中文（中国大陆）)"
+    ]
+  },
+  "en": [
+    {
+      "name": "Samantha",
+      "locale": "en_US",
+      "sample": "Hello! My name is Samantha."
+    },
+    {
+      "name": "Kathy",
+      "locale": "en_US",
+      "sample": "Hello! My name is Kathy."
+    },
+    {
+      "name": "Flo (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Flo."
+    },
+    {
+      "name": "Sandy (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Sandy."
+    },
+    {
+      "name": "Aman",
+      "locale": "en_IN",
+      "sample": "Hello! My name is Aman."
+    },
+    {
+      "name": "Daniel",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Daniel."
+    },
+    {
+      "name": "Eddy (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Eddy."
+    },
+    {
+      "name": "Eddy (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Eddy."
+    },
+    {
+      "name": "Flo (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Flo."
+    },
+    {
+      "name": "Grandma (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Grandma."
+    },
+    {
+      "name": "Grandma (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Grandma."
+    },
+    {
+      "name": "Grandpa (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Grandpa."
+    },
+    {
+      "name": "Grandpa (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Grandpa."
+    },
+    {
+      "name": "Karen",
+      "locale": "en_AU",
+      "sample": "Hello! My name is Karen."
+    },
+    {
+      "name": "Moira",
+      "locale": "en_IE",
+      "sample": "Hello! My name is Moira."
+    },
+    {
+      "name": "Ralph",
+      "locale": "en_US",
+      "sample": "Hello! My name is Ralph."
+    },
+    {
+      "name": "Reed (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Reed."
+    },
+    {
+      "name": "Reed (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Reed."
+    },
+    {
+      "name": "Rishi",
+      "locale": "en_IN",
+      "sample": "Hello! My name is Rishi."
+    },
+    {
+      "name": "Rocko (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Rocko."
+    },
+    {
+      "name": "Rocko (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Rocko."
+    },
+    {
+      "name": "Sandy (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Sandy."
+    },
+    {
+      "name": "Shelley (英语（美国）)",
+      "locale": "en_US",
+      "sample": "Hello! My name is Shelley."
+    },
+    {
+      "name": "Shelley (英语（英国）)",
+      "locale": "en_GB",
+      "sample": "Hello! My name is Shelley."
+    },
+    {
+      "name": "Tara",
+      "locale": "en_IN",
+      "sample": "Hello! My name is Tara."
+    },
+    {
+      "name": "Tessa",
+      "locale": "en_ZA",
+      "sample": "Hello! My name is Tessa."
+    },
+    {
+      "name": "Albert",
+      "locale": "en_US",
+      "sample": "Hello! My name is Albert."
+    },
+    {
+      "name": "Bad News",
+      "locale": "en_US",
+      "sample": "Hello! My name is Bad News."
+    },
+    {
+      "name": "Bahh",
+      "locale": "en_US",
+      "sample": "Hello! My name is Bahh."
+    },
+    {
+      "name": "Bells",
+      "locale": "en_US",
+      "sample": "Hello! My name is Bells."
+    },
+    {
+      "name": "Boing",
+      "locale": "en_US",
+      "sample": "Hello! My name is Boing."
+    },
+    {
+      "name": "Bubbles",
+      "locale": "en_US",
+      "sample": "Hello! My name is Bubbles."
+    },
+    {
+      "name": "Cellos",
+      "locale": "en_US",
+      "sample": "Hello! My name is Cellos."
+    },
+    {
+      "name": "Fred",
+      "locale": "en_US",
+      "sample": "Hello! My name is Fred."
+    },
+    {
+      "name": "Good News",
+      "locale": "en_US",
+      "sample": "Hello! My name is Good News."
+    },
+    {
+      "name": "Jester",
+      "locale": "en_US",
+      "sample": "Hello! My name is Jester."
+    },
+    {
+      "name": "Junior",
+      "locale": "en_US",
+      "sample": "Hello! My name is Junior."
+    },
+    {
+      "name": "Organ",
+      "locale": "en_US",
+      "sample": "Hello! My name is Organ."
+    },
+    {
+      "name": "Superstar",
+      "locale": "en_US",
+      "sample": "Hello! My name is Superstar."
+    },
+    {
+      "name": "Trinoids",
+      "locale": "en_US",
+      "sample": "Hello! My name is Trinoids."
+    },
+    {
+      "name": "Whisper",
+      "locale": "en_US",
+      "sample": "Hello! My name is Whisper."
+    },
+    {
+      "name": "Wobble",
+      "locale": "en_US",
+      "sample": "Hello! My name is Wobble."
+    },
+    {
+      "name": "Zarvox",
+      "locale": "en_US",
+      "sample": "Hello! My name is Zarvox."
+    }
+  ],
+  "zh": [
+    {
+      "name": "Tingting",
+      "locale": "zh_CN",
+      "sample": "你好！我叫婷婷。"
+    },
+    {
+      "name": "Meijia",
+      "locale": "zh_TW",
+      "sample": "你好，我叫美佳。"
+    },
+    {
+      "name": "Sinji",
+      "locale": "zh_HK",
+      "sample": "你好！我叫善怡。"
+    },
+    {
+      "name": "Flo (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Flo。"
+    },
+    {
+      "name": "Sandy (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Sandy。"
+    },
+    {
+      "name": "Shelley (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Shelley。"
+    },
+    {
+      "name": "Eddy (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Eddy。"
+    },
+    {
+      "name": "Eddy (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Eddy。"
+    },
+    {
+      "name": "Flo (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Flo。"
+    },
+    {
+      "name": "Grandma (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Grandma。"
+    },
+    {
+      "name": "Grandma (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Grandma。"
+    },
+    {
+      "name": "Grandpa (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Grandpa。"
+    },
+    {
+      "name": "Grandpa (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Grandpa。"
+    },
+    {
+      "name": "Reed (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Reed。"
+    },
+    {
+      "name": "Reed (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Reed。"
+    },
+    {
+      "name": "Rocko (中文（中国大陆）)",
+      "locale": "zh_CN",
+      "sample": "你好！我叫Rocko。"
+    },
+    {
+      "name": "Rocko (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Rocko。"
+    },
+    {
+      "name": "Sandy (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Sandy。"
+    },
+    {
+      "name": "Shelley (中文（台湾）)",
+      "locale": "zh_TW",
+      "sample": "你好，我叫Shelley。"
+    }
+  ]
+}

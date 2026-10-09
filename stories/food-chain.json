@@ -1,0 +1,183 @@
+{
+  "id": "food-chain",
+  "title": "食物链小学堂",
+  "titleEn": "The Food Chain",
+  "subtitle": "双语科学故事",
+  "cover": "🌿",
+  "accent": "#2f7d5d",
+  "settings": {
+    "enVoice": "Samantha",
+    "zhVoice": "Tingting",
+    "enRate": 158,
+    "zhRate": 166,
+    "gapWithinSegment": 0.6,
+    "gapBetweenSegments": 1.1,
+    "ambience": "meadow",
+    "ambienceVolume": -20,
+    "stingVolume": -14,
+    "leadIn": 1.4,
+    "tailOut": 2.6
+  },
+  "segments": [
+    {
+      "section": "① 什么是食物链？",
+      "en": "In nature, every living thing has to eat to stay alive.",
+      "zh": "大自然里，每一种生物都要吃东西，才能活下去。"
+    },
+    {
+      "en": "One eats another, and another eats the next. They are linked together, like a chain.",
+      "zh": "它们一个吃一个，一个又被另一个吃，就像链条一样连在一起。"
+    },
+    {
+      "en": "That is a food chain.",
+      "zh": "这就是食物链。",
+      "sting": "chime"
+    },
+    {
+      "en": "And all of its energy comes from the sun.",
+      "zh": "而整条食物链的能量，都来自太阳。",
+      "pauseAfter": 1.8
+    },
+    {
+      "section": "② 食物链的四个角色",
+      "en": "Every food chain has four jobs.",
+      "zh": "每一条食物链里，都有四个角色。",
+      "sting": "pop"
+    },
+    {
+      "en": "First, the producers. Plants make their own food out of sunlight. They are nature's little cooks.",
+      "zh": "第一是生产者。植物用阳光自己制造养分，它们是大自然的小厨师。"
+    },
+    {
+      "en": "Grass, trees, flowers, and seaweed are all producers.",
+      "zh": "草、树、花和海藻，都是生产者。"
+    },
+    {
+      "en": "Next come the plant eaters. Animals that only eat plants are called herbivores: rabbits, caterpillars, deer, and snails.",
+      "zh": "接着是吃植物的动物。只吃植物的动物叫植食动物——兔子、毛毛虫、鹿和蜗牛。"
+    },
+    {
+      "en": "Then the meat eaters. Animals that eat other animals are called carnivores: foxes, frogs, eagles, and snakes.",
+      "zh": "然后是吃肉的动物。吃其他动物的叫肉食动物——狐狸、青蛙、老鹰和蛇。"
+    },
+    {
+      "en": "And finally, the decomposers. Mushrooms and bacteria break down dead things, and give the nutrients back to the soil, so plants can grow better.",
+      "zh": "最后是分解者。蘑菇和细菌把死掉的生物分解成养分，还给土壤，让植物长得更好。",
+      "sting": "drip",
+      "pauseAfter": 1.8
+    },
+    {
+      "section": "③ 草地上的链子",
+      "en": "Let us visit a grassland, where every chain begins with grass.",
+      "zh": "我们先去草原看看。在这里，每一条链子都从草开始。"
+    },
+    {
+      "en": "A grasshopper eats the grass. A frog eats the grasshopper.",
+      "zh": "蚱蜢吃草，青蛙吃蚱蜢。"
+    },
+    {
+      "en": "A snake eats the frog. And an eagle eats the snake.",
+      "zh": "蛇吃青蛙，老鹰吃蛇。"
+    },
+    {
+      "en": "The eagle stands at the very top of the chain. No animal dares to eat it.",
+      "zh": "老鹰站在食物链的最顶端，没有动物敢吃它。",
+      "pauseAfter": 1.5
+    },
+    {
+      "section": "④ 树林里",
+      "en": "Now, into the forest.",
+      "zh": "现在，我们走进树林。",
+      "ambience": "forest"
+    },
+    {
+      "en": "The leaves are the producer. A caterpillar eats the leaves. A bird eats the caterpillar.",
+      "zh": "树叶是生产者，毛毛虫吃树叶，小鸟吃毛毛虫。"
+    },
+    {
+      "en": "An owl eats the bird. Owls sleep during the day, and hunt at night.",
+      "zh": "猫头鹰吃小鸟。猫头鹰白天睡觉，晚上出来抓小鸟和老鼠。",
+      "pauseAfter": 1.5
+    },
+    {
+      "section": "⑤ 池塘边",
+      "en": "Down to the pond.",
+      "zh": "接着，我们来到池塘边。",
+      "ambience": "pond"
+    },
+    {
+      "en": "Water plants are the producer. A snail eats the water plants. A small fish eats the snail.",
+      "zh": "水草是生产者，螺蛳吃水草，小鱼吃螺蛳。"
+    },
+    {
+      "en": "A duck eats the small fish. But the duck must also watch out for the fox on the shore.",
+      "zh": "鸭子吃小鱼。不过鸭子也要小心岸上的狐狸。",
+      "pauseAfter": 1.5
+    },
+    {
+      "section": "⑥ 大海里",
+      "en": "And out to the open sea.",
+      "zh": "最后，我们来到大海。",
+      "ambience": "ocean"
+    },
+    {
+      "en": "Seaweed is the producer. Tiny shrimp eat the seaweed. Small fish eat the shrimp. And dolphins eat the small fish.",
+      "zh": "海藻是生产者，小虾吃海藻，小鱼吃小虾，海豚吃小鱼。"
+    },
+    {
+      "en": "Dolphins are among the smartest animals in the ocean. They find fish using sound waves.",
+      "zh": "海豚是海洋里最聪明的动物之一。它用声波来寻找小鱼。",
+      "pauseAfter": 1.8
+    },
+    {
+      "section": "⑦ 谁多谁少？金字塔",
+      "en": "Here is a question for you. On a meadow, is there more grass, or more rabbits?",
+      "zh": "考考你：草地上，是草多，还是兔子多？",
+      "ambience": "meadow"
+    },
+    {
+      "en": "There is the most grass, fewer rabbits, and even fewer eagles. The higher you go, the fewer there are. It looks like a pyramid.",
+      "zh": "草最多，兔子少一些，老鹰最少。越往上，数量越少，就像一个金字塔。",
+      "pauseAfter": 1.8
+    },
+    {
+      "section": "⑧ 不止一条链：食物网",
+      "en": "But a fox does not only eat rabbits. It also eats mice and birds. And a snake eats mice too, as well as frogs.",
+      "zh": "不过狐狸不只吃兔子，它也吃老鼠和小鸟。蛇也吃老鼠，还吃青蛙。",
+      "ambience": "forest"
+    },
+    {
+      "en": "Many food chains cross each other, like a spider web. That is a food web. And the bigger the web, the more stable nature is.",
+      "zh": "好多条食物链交叉在一起，像一张蜘蛛网，这就是食物网。网越大，大自然就越稳定。",
+      "pauseAfter": 1.8
+    },
+    {
+      "section": "⑨ 你知道吗？",
+      "en": "Did you know? All energy comes from the sun. Plants make food with sunlight, animals eat the plants, and the energy passes along.",
+      "zh": "你知道吗？所有的能量都是从太阳来的。植物用阳光制造食物，动物吃了植物，能量就传下去了。",
+      "ambience": "night",
+      "sting": "twinkle"
+    },
+    {
+      "en": "Decomposers are nature's cleaners. Mushrooms and bacteria turn dead leaves and animals back into soil, so the grass can grow better.",
+      "zh": "分解者是大自然的清洁工。蘑菇和细菌把枯叶和死去的动物分解成养分，还给土壤，草才能长得更好。"
+    },
+    {
+      "en": "What if there were no wolves? There would be too many deer, the grass would be eaten bare, and other animals would lose their homes. Every animal matters.",
+      "zh": "如果没有狼，会怎么样呢？鹿会太多，草被吃光，其他动物就没有家了。所以每一个动物都很重要。"
+    },
+    {
+      "en": "Sharks are heroes too. They keep the ocean in balance. If the sharks disappeared, the whole ocean would fall apart.",
+      "zh": "鲨鱼也是大英雄。鲨鱼在海洋里保持生态平衡。如果鲨鱼消失了，整个海洋都会乱套。",
+      "ambience": "ocean"
+    },
+    {
+      "section": "尾声",
+      "en": "Nature is one big family. Every living thing matters.",
+      "zh": "大自然是个大家庭，每一个生命都很重要。",
+      "ambience": "meadow",
+      "sting": "chime",
+      "pauseAfter": 0.5
+    }
+  ]
+}

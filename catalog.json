@@ -1,0 +1,71 @@
+{
+  "beds": [
+    {
+      "key": "meadow",
+      "label": "草甸微风",
+      "emoji": "🌿"
+    },
+    {
+      "key": "forest",
+      "label": "树林",
+      "emoji": "🌳"
+    },
+    {
+      "key": "ocean",
+      "label": "海浪",
+      "emoji": "🌊"
+    },
+    {
+      "key": "pond",
+      "label": "池塘",
+      "emoji": "💧"
+    },
+    {
+      "key": "rain",
+      "label": "下雨",
+      "emoji": "🌧️"
+    },
+    {
+      "key": "space",
+      "label": "太空",
+      "emoji": "🪐"
+    },
+    {
+      "key": "night",
+      "label": "夜晚",
+      "emoji": "🌙"
+    }
+  ],
+  "stings": [
+    {
+      "key": "pop",
+      "label": "啵",
+      "emoji": "🫧"
+    },
+    {
+      "key": "chime",
+      "label": "叮咚",
+      "emoji": "🔔"
+    },
+    {
+      "key": "whoosh",
+      "label": "嗖",
+      "emoji": "💨"
+    },
+    {
+      "key": "drip",
+      "label": "水滴",
+      "emoji": "💧"
+    },
+    {
+      "key": "twinkle",
+      "label": "星星闪",
+      "emoji": "✨"
+    },
+    {
+      "key": "heartbeat",
+      "label": "心跳",
+      "emoji": "💓"
+    }
+  ]
+}

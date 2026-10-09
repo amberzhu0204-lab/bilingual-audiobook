@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fdf8f0" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#141a18" media="(prefers-color-scheme:dark)">
+<title>双语有声绘本工坊</title>
+<style>
+:root{
+  --bg:#fdf8f0;--bg2:#f6efe2;--card:#fffdf9;--ink:#23312b;--dim:#7d8a84;--line:#e8e0d2;
+  --accent:#2f7d5d;--accent-soft:#e7f2ec;--danger:#c2554a;--shadow:0 6px 20px rgba(60,50,30,.08);
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121816;--bg2:#0c110f;--card:#1b2320;--ink:#e8efe9;--dim:#8d9b94;--line:#2a3531;
+    --accent-soft:#1e2f28;--shadow:0 6px 20px rgba(0,0,0,.4);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ---------- header ---------- */
+header.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:.6rem 1rem;
+  display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.brand{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.45rem}
+.brand small{font-weight:400;color:var(--dim);font-size:.72rem}
+.grow{flex:1}
+button{font-family:inherit;font-size:.82rem;cursor:pointer;border-radius:9px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);padding:.44rem .8rem;transition:.15s;white-space:nowrap}
+button:hover{border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+button:active{transform:scale(.97)}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+button.primary:hover{filter:brightness(1.08)}
+button.ghost{background:transparent;border-color:transparent;color:var(--dim);padding:.35rem .5rem}
+button.ghost:hover{color:var(--ink);background:var(--accent-soft)}
+button.danger:hover{color:var(--danger);border-color:var(--danger)}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* ---------- layout ---------- */
+.wrap{display:grid;grid-template-columns:1fr 320px;gap:1rem;padding:1rem;max-width:1220px;margin:0 auto;align-items:start}
+@media(max-width:940px){.wrap{grid-template-columns:1fr}.side{position:static!important}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:.9rem;box-shadow:var(--shadow)}
+.panel+.panel{margin-top:1rem}
+.panel h2{margin:0 0 .7rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);font-weight:700}
+.side{position:sticky;top:4.2rem}
+label{display:block;font-size:.74rem;color:var(--dim);margin:.55rem 0 .2rem;font-weight:600}
+input[type=text],input[type=number],textarea,select{
+  width:100%;font-family:inherit;font-size:.86rem;color:var(--ink);background:var(--bg);
+  border:1px solid var(--line);border-radius:9px;padding:.45rem .6rem;transition:.15s}
+textarea{resize:vertical;line-height:1.5}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);background:var(--card)}
+.row{display:grid;gap:.5rem}
+.row.c2{grid-template-columns:1fr 1fr}
+.row.c3{grid-template-columns:1fr 1fr 1fr}
+.hint{font-size:.7rem;color:var(--dim);margin:.35rem 0 0}
+
+/* ---------- segment card ---------- */
+.seg{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:.7rem;box-shadow:var(--shadow)}
+.seg+.seg{margin-top:.6rem}
+.seg.playing{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.seg-head{display:flex;align-items:center;gap:.4rem;margin-bottom:.5rem}
+.num{font-size:.7rem;font-weight:700;color:var(--accent);background:var(--accent-soft);
+  border-radius:6px;padding:.15rem .42rem;font-variant-numeric:tabular-nums;flex:0 0 auto}
+.secin{flex:1;min-width:0;font-size:.78rem!important;padding:.28rem .5rem!important;background:transparent!important;border-color:transparent!important}
+.secin:hover{border-color:var(--line)!important;background:var(--bg)!important}
+.tools{display:flex;gap:.1rem;flex:0 0 auto}
+.en-in{font-family:Georgia,"Iowan Old Style",Cambria,serif;font-size:.9rem}
+.zh-in{font-size:.95rem;font-weight:500}
+.seg-foot{display:grid;grid-template-columns:1fr 1fr 78px;gap:.4rem;margin-top:.5rem;align-items:end}
+.seg-foot label{margin-top:0}
+.amb-ov.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+.addwrap{display:flex;gap:.5rem;margin-top:.7rem}
+
+/* ---------- preview bar ---------- */
+.preview{position:fixed;left:0;right:0;bottom:0;z-index:35;background:color-mix(in srgb,var(--bg) 94%,transparent);
+  backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:.6rem 1rem;
+  display:flex;align-items:center;gap:.7rem;transform:translateY(110%);transition:transform .28s}
+.preview.on{transform:none}
+.preview .now{flex:1;min-width:0;font-size:.78rem;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview .now b{color:var(--accent)}
+
+/* ---------- toast / modal ---------- */
+.toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(140%);
+  background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:10px;font-size:.82rem;
+  z-index:60;transition:transform .3s;max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;place-items:center;z-index:70;padding:1rem}
+.modal.on{display:grid}
+.modal .box{background:var(--card);border-radius:16px;padding:1.3rem;max-width:44rem;width:100%;
+  max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h3{margin:0 0 .6rem;font-size:1.05rem}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.7rem;overflow:auto;
+  font-size:.76rem;line-height:1.5;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.badge{display:inline-block;font-size:.68rem;padding:.1rem .4rem;border-radius:5px;background:var(--accent-soft);
+  color:var(--accent);font-weight:700;vertical-align:middle}
+.badge.warn{background:#f6e5e2;color:#a8443a}
+@media(prefers-color-scheme:dark){.badge.warn{background:#3a2320;color:#e09189}}
+.badge:empty{display:none}
+.spin{display:inline-block;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🎙️ 双语有声绘本工坊 <small>中英朗读 · 背景音效 · 可分享播放器</small></div>
+  <span class="grow"></span>
+  <button id="btnLibrary">🎧 绘本馆</button>
+  <button id="btnSample">📚 载入示例</button>
+  <button id="btnImport">📥 导入</button>
+  <button id="btnExport">📤 导出 JSON</button>
+  <button id="btnPreviewAll">▶ 全程试听</button>
+  <button class="primary" id="btnBuild">⭐ 生成音频</button>
+</header>
+
+<div class="wrap">
+  <!-- =============== 左：内容 =============== -->
+  <div>
+    <div class="panel">
+      <h2>故事信息</h2>
+      <div class="row c2">
+        <div><label>中文标题</label><input type="text" id="mTitle" placeholder="食物链小学堂"></div>
+        <div><label>英文标题</label><input type="text" id="mTitleEn" placeholder="The Food Chain"></div>
+      </div>
+      <div class="row c3" style="margin-top:.1rem">
+        <div><label>副标题</label><input type="text" id="mSub" placeholder="双语科学故事"></div>
+        <div><label>封面 emoji</label><input type="text" id="mCover" placeholder="🌿"></div>
+        <div><label>主题色</label><input type="text" id="mAccent" placeholder="#2f7d5d"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>段落 <span class="badge" id="segCount">0</span> <span class="badge" id="durEst"></span></h2>
+      <div id="segs"></div>
+      <div class="addwrap">
+        <button id="btnAdd">＋ 添加段落</button>
+        <button id="btnClear" class="danger ghost">清空全部</button>
+      </div>
+      <p class="hint">试试：在文本框里按 <b>⌘/Ctrl + Enter</b> 跳到下一段；背景氛围写在「换场景」的那一段即可，后面会自动沿用。</p>
+    </div>
+  </div>
+
+  <!-- =============== 右：设置 =============== -->
+  <div class="side">
+    <div class="panel">
+      <h2>朗读</h2>
+      <label>英文嗓音 <span class="badge" id="enVoiceOk"></span></label>
+      <select id="sEnVoice"></select>
+      <label>语速 <span id="sEnRateVal" style="color:var(--accent)">158</span> 词/分</label>
+      <input type="range" id="sEnRate" min="100" max="240" value="158" style="width:100%">
+      <label>中文嗓音 <span class="badge" id="zhVoiceOk"></span></label>
+      <select id="sZhVoice"></select>
+      <label>语速 <span id="sZhRateVal" style="color:var(--accent)">166</span> 字/分</label>
+      <input type="range" id="sZhRate" min="100" max="260" value="166" style="width:100%">
+      <p class="hint" id="voiceNote"></p>
+    </div>
+
+    <div class="panel">
+      <h2>节奏</h2>
+      <div class="row c2">
+        <div><label>中英之间停顿 (秒)</label><input type="number" id="sGapIn" step="0.1" min="0" max="5" value="0.6"></div>
+        <div><label>段与段停顿 (秒)</label><input type="number" id="sGapOut" step="0.1" min="0" max="5" value="1.1"></div>
+      </div>
+      <div class="row c2">
+        <div><label>开头留白 (秒)</label><input type="number" id="sLead" step="0.1" min="0" max="10" value="1.4"></div>
+        <div><label>结尾留白 (秒)</label><input type="number" id="sTail" step="0.1" min="0" max="15" value="2.6"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>背景氛围</h2>
+      <label>默认氛围</label>
+      <select id="sAmb"></select>
+      <div class="row c2" style="margin-top:.3rem">
+        <div><label>音量 <span id="sAmbVolVal" style="color:var(--accent)">-20</span> dB</label>
+          <input type="range" id="sAmbVol" min="-40" max="-6" value="-20" style="width:100%"></div>
+        <div><label>音效音量 <span id="sStingVolVal" style="color:var(--accent)">-14</span> dB</label>
+          <input type="range" id="sStingVol" min="-30" max="-3" value="-14" style="width:100%"></div>
+      </div>
+      <p class="hint">生成时会把背景音单独做成一条轨，播放器里可以随时一键关掉。</p>
+    </div>
+
+    <div class="panel">
+      <h2>构建</h2>
+      <p class="hint" id="buildHint">点右上角「生成音频」。生成后得到真·音频文件 + 可分享的单文件播放器。</p>
+      <div id="buildLog" class="hint" style="white-space:pre-wrap;font-family:ui-monospace,monospace"></div>
+    </div>
+  </div>
+</div>
+
+<div class="preview" id="previewBar">
+  <button id="btnStop" class="danger">■ 停止</button>
+  <div class="now" id="nowText">—</div>
+</div>
+
+<div class="modal" id="modal"><div class="box" id="modalBox"></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileIn" accept=".json" style="display:none">
+
+<script>
+/* ============================================================
+   状态
+   ============================================================ */
+const LS_KEY = 'bilingual-audiobook/story/v1'
+let catalog = { beds: [], stings: [] }
+let voiceCatalog = { en: [], zh: [] }
+let browserVoices = []          // speechSynthesis 实际可用的嗓音（Safari 上 macOS 系统嗓音都在）
+let playingSeg = -1
+let saveTimer = null
+
+const blank = (en, zh) => ({ en: en || '', zh: zh || '', section: '', ambience: null, sting: null, pauseAfter: null })
+
+let story = {
+  id: 'my-story', title: '', titleEn: '', subtitle: '双语科学故事', cover: '📖', accent: '#2f7d5d',
+  settings: { enVoice: 'Samantha', zhVoice: 'Tingting', enRate: 158, zhRate: 166,
+    gapWithinSegment: 0.6, gapBetweenSegments: 1.1, ambience: 'meadow', ambienceVolume: -20,
+    stingVolume: -14, leadIn: 1.4, tailOut: 2.6 },
+  segments: [blank('', '')],
+}
+
+/* ============================================================
+   小工具
+   ============================================================ */
+const $ = (id) => document.getElementById(id)
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+
+function toast(msg, ms = 2600) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('on')
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), ms)
+}
+function modal(html) { $('modalBox').innerHTML = html; $('modal').classList.add('on') }
+function closeModal() { $('modal').classList.remove('on') }
+$('modal').onclick = (e) => { if (e.target.id === 'modal') closeModal() }
+
+const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+/* 实测标定（见 tools/build.mjs 产出的 manifest）：
+   say -r R 的真实语速并不是 R 词/分 —— 英文约为 1.18×R 词/分，中文约为 1.64×R 字/分。
+   不校正的话估算时长会偏差 30% 以上。 */
+const CAL = { en: 1.181, zh: 1.639 }   // 有效语速 / say 的 -r 参数
+const BASE = { en: 175, zh: 260 }      // speechSynthesis rate=1.0 时大致对应的语速
+
+/** 估算时长：英文按 词/分，中文按 字/分（含段间停顿） */
+function estimateDuration() {
+  const S = story.settings
+  let t = (+S.leadIn || 0) + (+S.tailOut || 0)
+  for (const s of story.segments) {
+    const en = (s.en || '').trim(), zh = (s.zh || '').trim()
+    if (en) t += (en.split(/\s+/).length / (CAL.en * (+S.enRate || 158))) * 60
+    if (en && zh) t += (+S.gapWithinSegment || 0)
+    if (zh) t += (zh.replace(/\s/g, '').length / (CAL.zh * (+S.zhRate || 166))) * 60
+    t += Number.isFinite(s.pauseAfter) ? +s.pauseAfter : (+S.gapBetweenSegments || 0)
+  }
+  return t
+}
+const mmss = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0')
+
+/* ============================================================
+   加载静态目录
+   ============================================================ */
+async function loadCatalog() {
+  try {
+    const [c, v] = await Promise.all([
+      fetch('catalog.json').then((r) => r.json()),
+      fetch('voices.json').then((r) => r.json()),
+    ])
+    catalog = c; voiceCatalog = v
+  } catch {
+    // 直接用 file:// 打开时 fetch 会失败 —— 退回内置的最常用嗓音
+    catalog = { beds: [['meadow', '草甸微风', '🌿'], ['forest', '树林', '🌳'], ['ocean', '海浪', '🌊'],
+      ['pond', '池塘', '💧'], ['rain', '下雨', '🌧️'], ['space', '太空', '🪐'], ['night', '夜晚', '🌙']]
+      .map(([key, label, emoji]) => ({ key, label, emoji })),
+      stings: [['pop', '啵', '🫧'], ['chime', '叮咚', '🔔'], ['whoosh', '嗖', '💨'],
+        ['drip', '水滴', '💧'], ['twinkle', '星星闪', '✨'], ['heartbeat', '心跳', '💓']]
+      .map(([key, label, emoji]) => ({ key, label, emoji })) }
+    voiceCatalog = { en: ['Samantha', 'Kathy', 'Flo (英语（美国））'].map((n) => ({ name: n, locale: 'en_US' })),
+      zh: ['Tingting', 'Meijia', 'Sinji'].map((n) => ({ name: n, locale: 'zh_CN' })) }
+    $('voiceNote').innerHTML = '⚠️ 以文件方式打开，嗓音列表为内置精简版。用 <b>node tools/serve.mjs</b> 启动可拿到完整列表。'
+  }
+}
+
+/* ============================================================
+   渲染
+   ============================================================ */
+function bedOptions(sel, allowInherit) {
+  const opts = allowInherit ? ['<option value="">↳ 沿用上一段</option>'] : []
+  for (const b of catalog.beds) {
+    opts.push('<option value="' + b.key + '"' + (sel === b.key ? ' selected' : '') + '>' + b.emoji + ' ' + b.label + '</option>')
+  }
+  return opts.join('')
+}
+function stingOptions(sel) {
+  const opts = ['<option value="">无</option>']
+  for (const s of catalog.stings) {
+    opts.push('<option value="' + s.key + '"' + (sel === s.key ? ' selected' : '') + '>' + s.emoji + ' ' + s.label + '</option>')
+  }
+  return opts.join('')
+}
+function voiceOptions(list, sel) {
+  const known = new Set(list.map((v) => v.name))
+  const opts = list.map((v) =>
+    '<option value="' + esc(v.name) + '"' + (v.name === sel ? ' selected' : '') + '>' + esc(v.name) + ' · ' + v.locale + '</option>')
+  if (sel && !known.has(sel)) opts.unshift('<option value="' + esc(sel) + '" selected>' + esc(sel) + '（自定义）</option>')
+  return opts.join('')
+}
+
+function renderSeqs() {
+  const host = $('segs')
+  host.innerHTML = story.segments.map((s, i) => `
+    <div class="seg" data-i="${i}">
+      <div class="seg-head">
+        <span class="num">${String(i + 1).padStart(2, '0')}</span>
+        <input class="secin" data-k="section" placeholder="小节标题（可留空）" value="${esc(s.section || '')}">
+        <div class="tools">
+          <button class="ghost" data-act="play" title="试听这一段">▶</button>
+          <button class="ghost" data-act="up" title="上移" ${i === 0 ? 'disabled' : ''}>↑</button>
+          <button class="ghost" data-act="down" title="下移" ${i === story.segments.length - 1 ? 'disabled' : ''}>↓</button>
+          <button class="ghost danger" data-act="del" title="删除">✕</button>
+        </div>
+      </div>
+      <textarea class="en-in" data-k="en" rows="2" placeholder="English text…">${esc(s.en)}</textarea>
+      <textarea class="zh-in" data-k="zh" rows="2" placeholder="中文文本…" style="margin-top:.4rem">${esc(s.zh)}</textarea>
+      <div class="seg-foot">
+        <div><label>背景氛围</label><select data-k="ambience" class="${s.ambience ? 'amb-ov on' : 'amb-ov'}">${bedOptions(s.ambience, true)}</select></div>
+        <div><label>音效</label><select data-k="sting">${stingOptions(s.sting)}</select></div>
+        <div><label>停顿</label><input type="number" data-k="pauseAfter" step="0.1" min="0" max="15"
+             value="${Number.isFinite(s.pauseAfter) ? s.pauseAfter : ''}" placeholder="${story.settings.gapBetweenSegments}"></div>
+      </div>
+    </div>`).join('')
+
+  $('segCount').textContent = story.segments.length
+  $('durEst').textContent = '≈ ' + mmss(estimateDuration())
+}
+
+function renderSettings() {
+  $('mTitle').value = story.title || ''
+  $('mTitleEn').value = story.titleEn || ''
+  $('mSub').value = story.subtitle || ''
+  $('mCover').value = story.cover || ''
+  $('mAccent').value = story.accent || ''
+
+  const S = story.settings
+  $('sEnVoice').innerHTML = voiceOptions(voiceCatalog.en, S.enVoice)
+  $('sZhVoice').innerHTML = voiceOptions(voiceCatalog.zh, S.zhVoice)
+  $('sAmb').innerHTML = bedOptions(S.ambience, false)
+  $('sEnRate').value = S.enRate; $('sEnRateVal').textContent = S.enRate
+  $('sZhRate').value = S.zhRate; $('sZhRateVal').textContent = S.zhRate
+  $('sGapIn').value = S.gapWithinSegment
+  $('sGapOut').value = S.gapBetweenSegments
+  $('sLead').value = S.leadIn
+  $('sTail').value = S.tailOut
+  $('sAmbVol').value = S.ambienceVolume; $('sAmbVolVal').textContent = S.ambienceVolume
+  $('sStingVol').value = S.stingVolume; $('sStingVolVal').textContent = S.stingVolume
+
+  // 这个嗓音本机的朗读引擎里有没有，直接标出来
+  const has = (name, lang) => browserVoices.some((v) => v.name === name) ? '✓ 本机可试听'
+    : (browserVoices.some((v) => v.lang && v.lang.startsWith(lang)) ? '可生成，试听用相近嗓音' : '本机无此嗓音')
+  $('enVoiceOk').textContent = has(S.enVoice, 'en')
+  $('zhVoiceOk').textContent = has(S.zhVoice, 'zh')
+}
+function renderAll() { renderSeqs(); renderSettings() }
+
+/* ============================================================
+   事件：故事元信息
+   ============================================================ */
+;[['mTitle', 'title'], ['mTitleEn', 'titleEn'], ['mSub', 'subtitle'], ['mCover', 'cover'], ['mAccent', 'accent']]
+  .forEach(([id, key]) => $(id).addEventListener('input', (e) => { story[key] = e.target.value; save() }))
+
+/* ============================================================
+   事件：设置
+   ============================================================ */
+function setSetting(key, val) { story.settings[key] = val; save(); $('durEst').textContent = '≈ ' + mmss(estimateDuration()) }
+$('sEnVoice').onchange = (e) => { setSetting('enVoice', e.target.value); renderSettings() }
+$('sZhVoice').onchange = (e) => { setSetting('zhVoice', e.target.value); renderSettings() }
+$('sEnRate').oninput = (e) => { setSetting('enRate', +e.target.value); $('sEnRateVal').textContent = e.target.value }
+$('sZhRate').oninput = (e) => { setSetting('zhRate', +e.target.value); $('sZhRateVal').textContent = e.target.value }
+$('sAmb').onchange = (e) => setSetting('ambience', e.target.value)
+$('sGapIn').oninput = (e) => setSetting('gapWithinSegment', +e.target.value)
+$('sGapOut').oninput = (e) => { setSetting('gapBetweenSegments', +e.target.value); renderSeqs() }
+$('sLead').oninput = (e) => setSetting('leadIn', +e.target.value)
+$('sTail').oninput = (e) => setSetting('tailOut', +e.target.value)
+$('sAmbVol').oninput = (e) => { setSetting('ambienceVolume', +e.target.value); $('sAmbVolVal').textContent = e.target.value }
+$('sStingVol').oninput = (e) => { setSetting('stingVolume', +e.target.value); $('sStingVolVal').textContent = e.target.value }
+
+/* ============================================================
+   事件：段落（事件委托）
+   ============================================================ */
+$('segs').addEventListener('input', (e) => {
+  const seg = e.target.closest('.seg'); if (!seg) return
+  const i = +seg.dataset.i, k = e.target.dataset.k; if (!k) return
+  if (k === 'pauseAfter') story.segments[i][k] = e.target.value === '' ? null : +e.target.value
+  else story.segments[i][k] = e.target.value
+  if (k === 'ambience') e.target.classList.toggle('amb-ov on', !!e.target.value)
+  save(); $('durEst').textContent = '≈ ' + mmss(estimateDuration())
+})
+$('segs').addEventListener('change', (e) => {
+  const seg = e.target.closest('.seg'); if (!seg) return
+  const i = +seg.dataset.i, k = e.target.dataset.k; if (k === 'ambience' || k === 'sting') {
+    story.segments[i][k] = e.target.value || null; save()
+  }
+})
+$('segs').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-act]'); if (!btn) return
+  const i = +btn.closest('.seg').dataset.i, act = btn.dataset.act, A = story.segments
+  if (act === 'play') { previewFrom(i, true); return }
+  if (act === 'del') { A.splice(i, 1); if (!A.length) A.push(blank()); }
+  if (act === 'up' && i > 0) [A[i - 1], A[i]] = [A[i], A[i - 1]]
+  if (act === 'down' && i < A.length - 1) [A[i + 1], A[i]] = [A[i], A[i + 1]]
+  save(); renderSeqs()
+})
+// ⌘/Ctrl + Enter → 下一段
+$('segs').addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault()
+    const seg = e.target.closest('.seg'); const next = seg && seg.nextElementSibling
+    if (next) next.querySelector('textarea').focus()
+    else { story.segments.push(blank()); save(); renderSeqs(); $('segs').lastElementChild.querySelector('textarea').focus() }
+  }
+})
+
+$('btnAdd').onclick = () => { story.segments.push(blank()); save(); renderSeqs(); $('segs').lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' }) }
+$('btnClear').onclick = () => { if (confirm('清空所有段落？')) { story.segments = [blank()]; save(); renderSeqs() } }
+
+/* ============================================================
+   导入 / 导出 / 示例
+   ============================================================ */
+$('btnExport').onclick = () => {
+  const s = { ...story, id: story.id || slug(story.titleEn || story.title) || 'story', settings: story.settings, segments: story.segments }
+  download(JSON.stringify(s, null, 2), (s.id || 'story') + '.json', 'application/json')
+  toast('已导出 story JSON')
+}
+$('btnImport').onclick = () => $('fileIn').click()
+$('fileIn').onchange = (e) => {
+  const f = e.target.files[0]; if (!f) return
+  const r = new FileReader()
+  r.onload = () => {
+    try { adopt(JSON.parse(r.result)); toast('已导入 ' + f.name) }
+    catch (err) { toast('导入失败：不是合法的 JSON') }
+  }
+  r.readAsText(f); e.target.value = ''
+}
+$('btnLibrary').onclick = () => { location.href = 'library.html' }
+$('btnSample').onclick = async () => {
+  try {
+    const s = await fetch('stories/food-chain.json').then((r) => r.json())
+    adopt(s); toast('已载入示例《食物链小学堂》')
+  } catch { toast('载入失败：请用 node tools/serve.mjs 启动后访问') }
+}
+function adopt(s) {
+  story = {
+    id: s.id || slug(s.titleEn || s.title) || 'story',
+    title: s.title || '', titleEn: s.titleEn || '', subtitle: s.subtitle || '双语科学故事',
+    cover: s.cover || '📖', accent: s.accent || '#2f7d5d',
+    settings: { ...story.settings, ...(s.settings || {}) },
+    segments: (s.segments || []).map((x) => ({
+      en: x.en || '', zh: x.zh || '', section: x.section || '',
+      ambience: x.ambience === undefined ? null : x.ambience,
+      sting: x.sting || null, pauseAfter: Number.isFinite(x.pauseAfter) ? x.pauseAfter : null,
+    })),
+  }
+  if (!story.segments.length) story.segments = [blank()]
+  save(); renderAll()
+}
+function download(text, name, mime) {
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(new Blob([text], { type: mime || 'text/plain' }))
+  a.download = name; a.click(); URL.revokeObjectURL(a.href)
+}
+
+/* ============================================================
+   本地持久化
+   ============================================================ */
+function save() {
+  clearTimeout(saveTimer)
+  saveTimer = setTimeout(() => { try { localStorage.setItem(LS_KEY, JSON.stringify(story)) } catch {} }, 400)
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(LS_KEY)
+    if (raw) { const s = JSON.parse(raw); if (s && s.segments) { adopt(s); return true } }
+  } catch {}
+  return false
+}
+
+/* ============================================================
+   试听（浏览器内置语音，用来即时确认节奏）
+   ============================================================ */
+const synth = window.speechSynthesis
+function refreshBrowserVoices() {
+  browserVoices = synth ? synth.getVoices() : []
+  if (browserVoices.length) renderSettings()
+}
+if (synth) { refreshBrowserVoices(); synth.onvoiceschanged = refreshBrowserVoices }
+
+function pickVoice(name, lang) {
+  const exact = browserVoices.find((v) => v.name === name)
+  if (exact) return exact
+  const sameLang = browserVoices.filter((v) => v.lang && v.lang.toLowerCase().startsWith(lang))
+  return sameLang[0] || null
+}
+/** 把 say 的 -r 参数换算成 speechSynthesis 的 rate，让试听速度贴近最终音频 */
+const toRate = (sayRate, lang) => {
+  const eff = CAL[lang] * (+sayRate || BASE[lang])   // say 实际语速
+  return Math.max(0.1, Math.min(3, eff / BASE[lang]))
+}
+
+let stopFlag = false
+function speak(text, lang, voiceName, wpm) {
+  return new Promise((resolve) => {
+    if (!text || !text.trim() || stopFlag) return resolve()
+    const u = new SpeechSynthesisUtterance(text)
+    const v = pickVoice(voiceName, lang)
+    if (v) u.voice = v
+    u.lang = v ? v.lang : (lang === 'zh' ? 'zh-CN' : 'en-US')
+    u.rate = toRate(wpm, lang === 'zh' ? 'zh' : 'en')
+    u.onend = resolve; u.onerror = resolve
+    synth.speak(u)
+  })
+}
+const wait = (ms) => new Promise((r) => setTimeout(r, ms))
+
+async function previewFrom(startIdx, single) {
+  if (!synth) return toast('这个浏览器不支持语音试听，请用 Safari 或 Chrome')
+  synth.cancel(); stopFlag = false
+  const S = story.settings
+  $('previewBar').classList.add('on')
+  const end = single ? startIdx + 1 : story.segments.length
+
+  for (let i = startIdx; i < end; i++) {
+    if (stopFlag) break
+    const s = story.segments[i]
+    playingSeg = i
+    document.querySelectorAll('.seg').forEach((el) => el.classList.toggle('playing', +el.dataset.i === i))
+    document.querySelector('.seg[data-i="' + i + '"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+
+    if (s.en && s.en.trim()) {
+      $('nowText').innerHTML = '<b>EN</b> ' + esc(s.en.slice(0, 70))
+      await speak(s.en, 'en', S.enVoice, S.enRate)
+    }
+    if (stopFlag) break
+    if (s.en && s.zh) await wait((+S.gapWithinSegment || 0) * 1000)
+    if (s.zh && s.zh.trim()) {
+      $('nowText').innerHTML = '<b>中</b> ' + esc(s.zh.slice(0, 50))
+      await speak(s.zh, 'zh', S.zhVoice, S.zhRate)
+    }
+    if (stopFlag) break
+    const gap = Number.isFinite(s.pauseAfter) ? s.pauseAfter : (+S.gapBetweenSegments || 0)
+    await wait(gap * 1000)
+  }
+  stopPreview()
+}
+function stopPreview() {
+  stopFlag = true; synth && synth.cancel()
+  playingSeg = -1
+  document.querySelectorAll('.seg').forEach((el) => el.classList.remove('playing'))
+  $('previewBar').classList.remove('on')
+}
+$('btnPreviewAll').onclick = () => previewFrom(0, false)
+$('btnStop').onclick = stopPreview
+addEventListener('keydown', (e) => { if (e.key === 'Escape') { stopPreview(); closeModal() } })
+
+/* ============================================================
+   生成音频
+   ============================================================ */
+$('btnBuild').onclick = async () => {
+  const payload = { ...story, id: story.id || slug(story.titleEn || story.title) || 'story' }
+  if (!payload.segments.some((s) => (s.en || '').trim() || (s.zh || '').trim())) return toast('还没有内容可以生成')
+  stopPreview()
+
+  const btn = $('btnBuild'); const old = btn.innerHTML
+  btn.disabled = true; btn.innerHTML = '<span class="spin">◐</span> 生成中…'
+  $('buildLog').textContent = '正在调用本机 say + ffmpeg 合成…'
+
+  try {
+    const r = await fetch('/api/build', {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload),
+    })
+    const j = await r.json()
+    if (!r.ok || !j.ok) throw new Error(j.error || ('HTTP ' + r.status))
+    $('buildLog').textContent = j.log || ''
+    modal('<h3>✅ 生成完成</h3>' +
+      '<p style="font-size:.86rem;color:var(--dim)">时长 ' + j.duration + '，共 ' + j.segments + ' 段。</p>' +
+      '<p style="margin:.6rem 0"><button class="primary" onclick="window.open(\'dist/' + j.id + '.standalone.html\',\'_blank\')">▶ 打开单文件播放器</button> ' +
+      '<button onclick="window.open(\'dist/' + j.id + '.html\',\'_blank\')">流式播放器</button></p>' +
+      '<pre>音频   audio/' + j.id + '/' + j.id + '.m4a\n' +
+      '氛围   audio/' + j.id + '/' + j.id + '.amb.m4a\n' +
+      '播放器 dist/' + j.id + '.html\n' +
+      '单文件 dist/' + j.id + '.standalone.html   ← 可直接发给孩子</pre>')
+  } catch (err) {
+    // 没起本地服务 —— 退回到「导出 JSON + 自己跑一条命令」
+    $('buildLog').textContent = ''
+    modal('<h3>需要本机服务来合成音频</h3>' +
+      '<p style="font-size:.86rem;color:var(--dim)">浏览器不能直接调用 macOS 的 <code>say</code> 和 <code>ffmpeg</code>。' +
+      '在项目目录里跑一次下面的命令，页面右上角的「生成音频」就能一键出片：</p>' +
+      '<pre>cd ~/bilingual-audiobook\nnode tools/serve.mjs</pre>' +
+      '<p style="font-size:.86rem;color:var(--dim)">或者：先把 JSON 导出去，再手动跑：</p>' +
+      '<pre>node tools/build.mjs stories/' + (payload.id || 'story') + '.json</pre>' +
+      '<p style="margin-top:.6rem"><button class="primary" onclick="document.getElementById(\'btnExport\').click()">📤 导出 story JSON</button></p>' +
+      '<p class="hint">原始错误：' + esc(String(err.message || err)) + '</p>')
+  } finally {
+    btn.disabled = false; btn.innerHTML = old
+  }
+}
+
+/* ============================================================
+   启动
+   ============================================================ */
+;(async () => {
+  await loadCatalog()
+  if (!load()) renderAll()
+  else renderAll()
+  refreshBrowserVoices()
+  // 空白故事时给一点引导
+  if (!story.segments.some((s) => (s.en || '').trim())) {
+    $('mTitle').placeholder = '例如：食物链小学堂'
+    $('mTitleEn').placeholder = '例如：The Food Chain'
+  }
+})()
+</script>
+</body>
+</html>

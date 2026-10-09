@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#fdf8f0" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#141a18" media="(prefers-color-scheme:dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>__TITLE__</title>
+<style>
+:root{
+  --bg:#fdf8f0; --bg2:#f6efe2; --card:#fffdf9; --ink:#23312b; --dim:#7d8a84;
+  --accent:#2f7d5d; --accent-soft:#e7f2ec; --line:#e8e0d2; --shadow:0 10px 30px rgba(60,50,30,.10);
+  --zh:1.62rem; --en:1.30rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#121816; --bg2:#0c110f; --card:#1b2320; --ink:#e8efe9; --dim:#8d9b94;
+    --accent-soft:#1e2f28; --line:#2a3531; --shadow:0 10px 30px rgba(0,0,0,.45);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0; background:radial-gradient(120% 80% at 50% 0%,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  display:flex; flex-direction:column; min-height:100dvh; overflow:hidden;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+/* ---------- header ---------- */
+header{display:flex;align-items:center;gap:.75rem;padding:1rem 1.25rem .5rem;flex:0 0 auto}
+.cover{font-size:2rem;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.12))}
+.titles{min-width:0}
+h1{margin:0;font-size:1.12rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{margin:.1rem 0 0;font-size:.74rem;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spacer{flex:1}
+.iconbtn{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;
+  width:2.4rem;height:2.4rem;display:grid;place-items:center;font-size:1rem;cursor:pointer;
+  transition:transform .12s ease,background .2s;
+}
+.iconbtn:active{transform:scale(.92)}
+/* ---------- stage ---------- */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:.5rem 1.25rem;min-height:0}
+.stage{width:100%;max-width:44rem;display:flex;flex-direction:column;gap:1rem}
+.chip{
+  align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:.3rem .7rem;border-radius:999px;letter-spacing:.02em;
+  transition:opacity .35s;
+}
+.lines{display:flex;flex-direction:column;gap:1.1rem;transition:opacity .35s ease}
+.lines.fade{opacity:0}
+.line-en{font-size:var(--en);line-height:1.45;font-weight:450;color:var(--ink);font-family:Georgia,"Iowan Old Style",Cambria,serif;font-style:italic}
+.line-zh{font-size:var(--zh);line-height:1.6;font-weight:600;color:var(--accent);letter-spacing:.01em}
+.line-en:empty,.line-zh:empty{display:none}
+@media(min-width:760px){:root{--zh:2.0rem;--en:1.6rem}}
+/* ---------- progress ---------- */
+.prog{display:flex;flex-direction:column;gap:.4rem}
+.bar{position:relative;height:.55rem;background:var(--line);border-radius:999px;cursor:pointer;overflow:hidden}
+.bar .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);border-radius:999px;transition:width .18s linear}
+.times{display:flex;justify-content:space-between;font-size:.7rem;color:var(--dim);font-variant-numeric:tabular-nums}
+/* ---------- transport ---------- */
+.transport{display:flex;align-items:center;justify-content:center;gap:1.1rem;flex:0 0 auto}
+.play{
+  width:5.4rem;height:5.4rem;border-radius:50%;border:0;cursor:pointer;
+  background:var(--accent);color:#fff;font-size:2.1rem;display:grid;place-items:center;
+  box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 42%,transparent);
+  transition:transform .12s ease,box-shadow .2s;
+}
+.play:active{transform:scale(.94)}
+.play.paused{animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 42%,transparent)}50%{box-shadow:0 8px 34px color-mix(in srgb,var(--accent) 65%,transparent)}}
+.skip{border:0;background:transparent;color:var(--dim);font-size:1.5rem;cursor:pointer;padding:.5rem;border-radius:50%;transition:color .2s,transform .12s}
+.skip:active{transform:scale(.9)}
+.skip:hover{color:var(--accent)}
+/* ---------- controls row ---------- */
+.controls{display:flex;gap:.45rem;overflow-x:auto;padding:.25rem 1.25rem calc(.9rem + env(safe-area-inset-bottom));flex:0 0 auto;scrollbar-width:none}
+.controls::-webkit-scrollbar{display:none}
+.toggle{
+  flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--dim);border-radius:999px;
+  padding:.5rem .85rem;font-size:.82rem;cursor:pointer;display:flex;align-items:center;gap:.35rem;
+  white-space:nowrap;transition:all .18s;font-family:inherit;
+}
+.toggle.on{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,transparent);font-weight:600}
+.toggle:active{transform:scale(.96)}
+/* ---------- transcript ---------- */
+.sheet{
+  position:fixed;inset:auto 0 0 0;max-height:78dvh;background:var(--card);border-radius:1.4rem 1.4rem 0 0;
+  box-shadow:0 -12px 40px rgba(0,0,0,.18);transform:translateY(102%);transition:transform .32s cubic-bezier(.32,.72,0,1);
+  display:flex;flex-direction:column;z-index:40;
+}
+.sheet.open{transform:none}
+.sheet header{padding:1rem 1.25rem .5rem;display:flex;align-items:center;gap:.6rem}
+.sheet h2{margin:0;font-size:1rem;font-weight:700}
+.grab{width:2.6rem;height:.28rem;background:var(--line);border-radius:999px;margin:.6rem auto 0}
+.list{overflow-y:auto;padding:.5rem 1rem 2rem;flex:1;-webkit-overflow-scrolling:touch}
+.item{padding:.7rem .85rem;border-radius:.8rem;cursor:pointer;border-left:3px solid transparent;transition:background .2s,border-color .2s}
+.item+.item{margin-top:.15rem}
+.item.active{background:var(--accent-soft);border-left-color:var(--accent)}
+.item .n{font-size:.66rem;color:var(--dim);font-variant-numeric:tabular-nums}
+.item .e{font-size:.85rem;font-family:Georgia,serif;font-style:italic;color:var(--ink);opacity:.85;margin-top:.15rem}
+.item .z{font-size:.95rem;font-weight:600;color:var(--accent);margin-top:.15rem}
+.item.active .e{opacity:1}
+/* ---------- overlay ---------- */
+.gate{
+  position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;z-index:60;
+  transition:opacity .4s;text-align:center;padding:2rem;
+}
+.gate.hide{opacity:0;pointer-events:none}
+.gate .big{width:7rem;height:7rem;font-size:3rem;border-radius:50%;border:0;background:var(--accent);color:#fff;cursor:pointer;box-shadow:0 12px 36px color-mix(in srgb,var(--accent) 45%,transparent);animation:breathe 2.6s ease-in-out infinite}
+.gate h3{margin:0;font-size:1.3rem;font-weight:700}
+.gate p{margin:0;color:var(--dim);font-size:.88rem;max-width:24rem;line-height:1.6}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s;z-index:30}
+.scrim.on{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="cover" id="cover">📖</div>
+  <div class="titles">
+    <h1 id="h1">故事</h1>
+    <p class="sub" id="sub"></p>
+  </div>
+  <div class="spacer"></div>
+  <button class="iconbtn" id="btnList" aria-label="全文">☰</button>
+</header>
+
+<main>
+  <div class="stage">
+    <div class="chip" id="chip" style="visibility:hidden">·</div>
+    <div class="lines" id="lines">
+      <div class="line-en" id="en"></div>
+      <div class="line-zh" id="zh"></div>
+    </div>
+    <div class="prog">
+      <div class="bar" id="bar" role="slider" aria-label="进度"><div class="fill" id="fill"></div></div>
+      <div class="times"><span id="tCur">0:00</span><span id="tTot">0:00</span></div>
+    </div>
+  </div>
+</main>
+
+<div class="transport">
+  <button class="skip" id="btnPrev" aria-label="上一句">⏮</button>
+  <button class="play" id="btnPlay" aria-label="播放">▶</button>
+  <button class="skip" id="btnNext" aria-label="下一句">⏭</button>
+</div>
+
+<div class="controls">
+  <button class="toggle on" id="tgLoop">🔁 循环</button>
+  <button class="toggle" id="tgAmb">🌊 背景音</button>
+  <button class="toggle" id="tgSleep">⏰ 睡眠</button>
+  <button class="toggle" id="tgSpeed">⚡ 1.0×</button>
+  <button class="toggle" id="tgSlow">🐢 慢速</button>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <header><h2>全文</h2><div class="spacer"></div><button class="iconbtn" id="btnClose">✕</button></header>
+  <div class="list" id="list"></div>
+</div>
+
+<div class="gate" id="gate">
+  <button class="big" id="gatePlay" aria-label="开始">▶</button>
+  <h3 id="gateTitle">准备好了吗？</h3>
+  <p id="gateDesc">点一下大按钮，故事就开始啦</p>
+</div>
+
+<audio id="au" preload="auto" playsinline __AUDIO_ATTR__></audio>
+<audio id="amb" preload="auto" playsinline loop __AUDIO_ATTR__></audio>
+
+<script>
+const MANIFEST = /*__MANIFEST__*/ null;
+const AUDIO_SRC = "__AUDIO_SRC__";
+const AMB_SRC = "__AMB_SRC__";
+
+const au = document.getElementById('au');
+const amb = document.getElementById('amb');
+const $ = (id) => document.getElementById(id);
+const cues = MANIFEST.cues || [];
+const fmt = (s) => {
+  if (!isFinite(s)) return '0:00';
+  s = Math.max(0, s);
+  return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+};
+
+/* ---------- static content ---------- */
+document.title = MANIFEST.title + (MANIFEST.titleEn ? ' · ' + MANIFEST.titleEn : '');
+$('h1').textContent = MANIFEST.title;
+$('cover').textContent = MANIFEST.cover || '📖';
+$('sub').textContent = [MANIFEST.titleEn, MANIFEST.subtitle].filter(Boolean).join(' · ');
+$('tTot').textContent = fmt(MANIFEST.duration);
+document.documentElement.style.setProperty('--accent', MANIFEST.accent || '#2f7d5d');
+$('gateTitle').textContent = MANIFEST.title;
+$('gateDesc').textContent = cues.length + ' 句 · ' + fmt(MANIFEST.duration) + ' · 中英双语朗读';
+au.src = AUDIO_SRC;
+if (AMB_SRC) { amb.src = AMB_SRC; } else { $('tgAmb').style.display = 'none'; }
+
+/* ---------- transcript ---------- */
+const listEl = $('list');
+cues.forEach((c, i) => {
+  const d = document.createElement('div');
+  d.className = 'item'; d.dataset.i = i;
+  d.innerHTML = '<div class="n">' + (i + 1) + ' · ' + fmt(c.start) + '</div>' +
+    (c.en ? '<div class="e"></div>' : '') + (c.zh ? '<div class="z"></div>' : '');
+  if (c.en) d.querySelector('.e').textContent = c.en;
+  if (c.zh) d.querySelector('.z').textContent = c.zh;
+  d.onclick = () => { au.currentTime = c.start + 0.01; if (au.paused) play(); closeSheet(); };
+  listEl.appendChild(d);
+});
+const items = [...listEl.children];
+
+/* ---------- current cue tracking ---------- */
+let cur = -1;
+const bedLabel = (name) => {
+  const map = { meadow: '🌿 草甸', forest: '🌳 树林', ocean: '🌊 海浪', pond: '💧 池塘',
+    rain: '🌧️ 下雨', space: '🪐 太空', night: '🌙 夜晚' };
+  return map[name] || '';
+};
+const regions = MANIFEST.regions || [];
+const bedAt = (t) => { for (const r of regions) if (t >= r.start && t < r.end) return r.ambience; return null; };
+
+function setCue(i, instant) {
+  if (i === cur || i < 0 || i >= cues.length) return;
+  cur = i;
+  const c = cues[i];
+  const paint = () => { $('en').textContent = c.en || ''; $('zh').textContent = c.zh || ''; };
+  if (instant) { paint(); } else {
+    $('lines').classList.add('fade');
+    setTimeout(() => { paint(); $('lines').classList.remove('fade'); }, 180);
+  }
+  const chip = $('chip');
+  if (c.section) { chip.textContent = c.section; chip.style.visibility = 'visible'; }
+  else chip.style.visibility = 'hidden';
+  items.forEach((el, k) => el.classList.toggle('active', k === i));
+  updateAmbBtn();
+  if (sheetOpen) {
+    const el = items[i];
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+}
+
+/* ---------- 氛围轨：独立开关，并与主轨保持同步 ---------- */
+let ambOn = true;
+function updateAmbBtn() {
+  const b = bedAt(au.currentTime);
+  const btn = $('tgAmb');
+  if (!b || !AMB_SRC) { btn.style.display = 'none'; return; }
+  btn.style.display = '';
+  btn.textContent = bedLabel(b);
+  btn.classList.toggle('on', ambOn);
+  btn.title = ambOn ? '背景音已开启，点一下关掉' : '背景音已关掉，点一下打开';
+}
+/** 主轨与氛围轨同步：普通漂移不管，差得多了就对齐 */
+function syncAmb(force) {
+  if (!AMB_SRC) return;
+  amb.playbackRate = au.playbackRate;
+  if (force || Math.abs(amb.currentTime - au.currentTime) > 0.35) {
+    try { amb.currentTime = au.currentTime; } catch {}
+  }
+}
+
+/* ---------- transport ---------- */
+const btnPlay = $('btnPlay');
+function play() {
+  syncAmb(true);
+  au.play().catch(() => {});
+  if (AMB_SRC && ambOn) amb.play().catch(() => {});
+}
+function pauseAll() { au.pause(); if (AMB_SRC) amb.pause(); }
+function toggle() { au.paused ? play() : pauseAll(); }
+function seekTo(t) {
+  au.currentTime = Math.max(0, t);
+  if (AMB_SRC) { try { amb.currentTime = Math.max(0, t); } catch {} }
+}
+btnPlay.onclick = toggle;
+$('gatePlay').onclick = () => { $('gate').classList.add('hide'); play(); };
+$('btnPrev').onclick = () => { const c = cues[Math.max(0, cur - 1)]; if (c) seekTo(c.start + 0.01); };
+$('btnNext').onclick = () => { const c = cues[Math.min(cues.length - 1, cur + 1)]; if (c) seekTo(c.start + 0.01); };
+
+au.addEventListener('play', () => {
+  btnPlay.textContent = '❚❚'; btnPlay.classList.remove('paused');
+  if (AMB_SRC && ambOn && amb.paused) { syncAmb(true); amb.play().catch(() => {}); }
+});
+au.addEventListener('pause', () => {
+  btnPlay.textContent = '▶'; btnPlay.classList.add('paused');
+  if (AMB_SRC) amb.pause();
+});
+au.addEventListener('ended', () => {
+  if (!loop) { btnPlay.textContent = '▶'; btnPlay.classList.add('paused'); if (AMB_SRC) amb.pause(); }
+});
+
+au.addEventListener('timeupdate', () => {
+  const d = au.duration || MANIFEST.duration;
+  $('fill').style.width = (au.currentTime / d * 100) + '%';
+  $('tCur').textContent = fmt(au.currentTime);
+  // 当前句 = 最后一个 start <= t 的句子
+  let i = Math.max(0, cur);
+  while (i + 1 < cues.length && au.currentTime >= cues[i + 1].start) i++;
+  while (i > 0 && au.currentTime < cues[i].start) i--;
+  setCue(i);
+  updateAmbBtn();
+  syncAmb(false);
+});
+
+$('bar').onclick = (e) => {
+  const r = e.currentTarget.getBoundingClientRect();
+  const d = au.duration || MANIFEST.duration;
+  seekTo(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * d);
+};
+
+/* ---------- toggles ---------- */
+let loop = true;
+$('tgLoop').onclick = () => { loop = !loop; au.loop = loop; $('tgLoop').classList.toggle('on', loop); };
+au.loop = true;
+
+$('tgAmb').onclick = () => {
+  ambOn = !ambOn;
+  if (AMB_SRC) {
+    if (ambOn && !au.paused) { syncAmb(true); amb.play().catch(() => {}); }
+    else if (!ambOn) amb.pause();
+  }
+  updateAmbBtn();
+};
+
+function setRate(r) { au.playbackRate = r; if (AMB_SRC) amb.playbackRate = r; }
+const speeds = [1, 1.25, 1.5, 0.75];
+let si = 0;
+$('tgSpeed').onclick = () => {
+  si = (si + 1) % speeds.length; setRate(speeds[si]);
+  $('tgSpeed').textContent = '⚡ ' + speeds[si] + '×';
+  $('tgSpeed').classList.toggle('on', si > 0);
+  $('tgSlow').classList.remove('on');
+};
+$('tgSlow').onclick = () => {
+  const on = $('tgSlow').classList.toggle('on');
+  setRate(on ? 0.7 : 1);
+  if (on) { $('tgSpeed').textContent = '⚡ 1×'; $('tgSpeed').classList.remove('on'); si = 0; }
+};
+
+/* 睡眠定时：到点后 20 秒内缓慢淡出并暂停 */
+let sleepTimer = null, fadeInt = null;
+const sleepOpts = [0, 5, 10, 20, 30];
+let sleepIdx = 0;
+$('tgSleep').onclick = () => {
+  sleepIdx = (sleepIdx + 1) % sleepOpts.length;
+  const m = sleepOpts[sleepIdx];
+  clearTimeout(sleepTimer); clearInterval(fadeInt); au.volume = 1; if (AMB_SRC) amb.volume = 1;
+  $('tgSleep').classList.toggle('on', m > 0);
+  $('tgSleep').textContent = m ? '⏰ ' + m + '分' : '⏰ 睡眠';
+  if (!m) return;
+  sleepTimer = setTimeout(() => {
+    const t0 = Date.now();
+    fadeInt = setInterval(() => {
+      const k = (Date.now() - t0) / 20000;
+      const v = Math.max(0, 1 - k);
+      au.volume = v;
+      if (AMB_SRC) amb.volume = v;
+      if (k >= 1) {
+        clearInterval(fadeInt); pauseAll();
+        au.volume = 1; if (AMB_SRC) amb.volume = 1;
+        sleepIdx = 0;
+        $('tgSleep').textContent = '⏰ 睡眠'; $('tgSleep').classList.remove('on');
+        $('gateDesc').textContent = '故事睡着啦，晚安 🌙';
+        $('gate').classList.remove('hide');
+      }
+    }, 200);
+  }, m * 60000);
+};
+
+/* ---------- sheet ---------- */
+let sheetOpen = false;
+function openSheet() { sheetOpen = true; $('sheet').classList.add('open'); $('scrim').classList.add('on'); items[cur] && items[cur].scrollIntoView({ block: 'center' }); }
+function closeSheet() { sheetOpen = false; $('sheet').classList.remove('open'); $('scrim').classList.remove('on'); }
+$('btnList').onclick = openSheet; $('btnClose').onclick = closeSheet; $('scrim').onclick = closeSheet;
+
+/* ---------- keyboard ---------- */
+addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { e.preventDefault(); toggle(); }
+  else if (e.code === 'ArrowRight') au.currentTime += 10;
+  else if (e.code === 'ArrowLeft') au.currentTime -= 10;
+  else if (e.code === 'ArrowDown') { const c = cues[Math.min(cues.length - 1, cur + 1)]; if (c) au.currentTime = c.start + 0.01; }
+  else if (e.code === 'ArrowUp') { const c = cues[Math.max(0, cur - 1)]; if (c) au.currentTime = c.start + 0.01; }
+  else if (e.code === 'Escape') closeSheet();
+});
+
+/* ---------- media session (锁屏控制) ---------- */
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: MANIFEST.title, artist: MANIFEST.titleEn || '双语科学故事', album: MANIFEST.subtitle || '',
+  });
+  const seekTo = (d) => { const c = cues[Math.min(cues.length - 1, Math.max(0, cur + d))]; if (c) au.currentTime = c.start + 0.01; };
+  navigator.mediaSession.setActionHandler('play', play);
+  navigator.mediaSession.setActionHandler('pause', () => au.pause());
+  navigator.mediaSession.setActionHandler('previoustrack', () => seekTo(-1));
+  navigator.mediaSession.setActionHandler('nexttrack', () => seekTo(1));
+  navigator.mediaSession.setActionHandler('seekbackward', () => { au.currentTime -= 10; });
+  navigator.mediaSession.setActionHandler('seekforward', () => { au.currentTime += 10; });
+}
+
+/* ---------- 初始画面 + 自动开始 ---------- */
+setCue(0, true);
+window.addEventListener('load', () => { play(); });
+</script>
+</body>
+</html>

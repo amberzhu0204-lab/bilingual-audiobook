@@ -1,0 +1,17 @@
+{
+  "name": "bilingual-audiobook",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "中英双语有声绘本：本机 TTS + 背景音效 → 可分享的单文件网页播放器",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "catalog": "node tools/catalog.mjs",
+    "build": "node tools/build.mjs stories/food-chain.json",
+    "build:fast": "node tools/build.mjs stories/food-chain.json --no-embed",
+    "rebuild": "node tools/catalog.mjs && node tools/build.mjs stories/food-chain.json"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

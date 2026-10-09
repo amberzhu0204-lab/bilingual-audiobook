@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fdf8f0" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#141a18" media="(prefers-color-scheme:dark)">
+<title>有声绘本馆</title>
+<style>
+:root{--bg:#fdf8f0;--bg2:#f6efe2;--card:#fffdf9;--ink:#23312b;--dim:#7d8a84;--line:#e8e0d2;
+  --accent:#2f7d5d;--accent-soft:#e7f2ec;--shadow:0 8px 24px rgba(60,50,30,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#121816;--bg2:#0c110f;--card:#1b2320;--ink:#e8efe9;
+  --dim:#8d9b94;--line:#2a3531;--accent-soft:#1e2f28;--shadow:0 8px 24px rgba(0,0,0,.4)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:radial-gradient(120% 70% at 50% 0%,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  padding:2.5rem 1.25rem 4rem}
+.wrap{max-width:60rem;margin:0 auto}
+h1{margin:0 0 .3rem;font-size:1.6rem;letter-spacing:.01em}
+.sub{color:var(--dim);font-size:.86rem;margin:0 0 2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem;
+  box-shadow:var(--shadow);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:.55rem;
+  transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(60,50,30,.16)}
+.card .emoji{font-size:2.4rem;line-height:1}
+.card .t{font-weight:700;font-size:1.05rem}
+.card .te{color:var(--dim);font-size:.78rem;font-family:Georgia,serif;font-style:italic}
+.card .meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:auto;padding-top:.5rem}
+.chip{font-size:.7rem;background:var(--accent-soft);color:var(--accent);border-radius:999px;
+  padding:.22rem .6rem;font-weight:600;font-variant-numeric:tabular-nums}
+.empty{color:var(--dim);text-align:center;padding:3rem 1rem;border:1px dashed var(--line);border-radius:16px}
+.foot{margin-top:2.5rem;color:var(--dim);font-size:.78rem;text-align:center}
+.foot a{color:var(--accent);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎧 有声绘本馆</h1>
+  <p class="sub">中英双语朗读 · 背景音效 · 睡前无限循环</p>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>还没有作品。打开<a href="index.html" style="color:var(--accent)">创作台</a>做一本吧。</div>
+  <p class="foot"><a href="index.html">→ 打开创作台，做一本新的</a></p>
+</div>
+<script>
+const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.round(s % 60)).padStart(2, '0')
+fetch('stories/index.json').then((r) => r.json()).then((list) => {
+  if (!list.length) { document.getElementById('empty').hidden = false; return }
+  document.getElementById('grid').innerHTML = list.map((s) => `
+    <a class="card" href="dist/${s.id}.html">
+      <div class="emoji">${s.cover || '📖'}</div>
+      <div class="t">${s.title}</div>
+      <div class="te">${s.titleEn || ''}</div>
+      <div class="meta">
+        <span class="chip">${fmt(s.duration)}</span>
+        <span class="chip">${s.segments} 句</span>
+      </div>
+    </a>`).join('')
+}).catch(() => { document.getElementById('empty').hidden = false })
+</script>
+</body>
+</html>
